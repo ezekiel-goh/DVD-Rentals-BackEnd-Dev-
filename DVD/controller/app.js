@@ -49,7 +49,7 @@ app.get("/searchResults/categories/", function (req, res) {
   Film.getCategories(name, category_id, (err, result) => {
     //-- you either get err or result
     if (!err) {
-      console.log(result[0]);
+      console.log(result);
       if (result[0] === undefined) {
         //-- When id = undefined
         res.status(200).send([]);
@@ -62,15 +62,17 @@ app.get("/searchResults/categories/", function (req, res) {
   });
 });
 
+//-- get searched titles
 app.get("/searchResults/", function (req, res) {
   var title = req.query.title;
-  var category = req.query.category;
+  var filmCategory = req.query.filmCategory;
   var rental_rate = parseFloat(req.query.rental_rate);
 
-  Film.getSearchedTitles(title, category, rental_rate, (err, result) => {
+
+  Film.getSearchedTitles(title, filmCategory, rental_rate, (err, result) => {
     //-- you either get err or result
     if (!err) {
-      console.log(result[0]);
+      console.log(result);
       if (result[0] === undefined) {
         //-- When id = undefined
         res.status(200).send([]);
@@ -92,7 +94,7 @@ app.get("/searchResults/:title/", function (req, res) {
   Film.FilmDetails(title, category, rental_rate, (err, result) => {
     //-- you either get err or result
     if (!err) {
-      console.log(result[0]);
+      console.log(result);
       if (result[0] === undefined) {
         //-- When id = undefined
         res.status(200).send([]);

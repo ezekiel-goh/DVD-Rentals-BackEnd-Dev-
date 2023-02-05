@@ -38,28 +38,28 @@ var Film = {
 
 
 
-  getSearchedTitles: function (title, film_category, maxRentalPrice, callback) {
+  getSearchedTitles: function (title, filmCategory, maxRentalPrice, callback) {
     var conn = db.getConnection();
     title = "%" + title + "%";
-    film_category = Number(film_category);
+    filmCategory = filmCategory;
     maxRentalPrice = Number(maxRentalPrice);
     conn.connect(function (err) {
       if (err) {
         console.log(err);
         return callback(err, null);
       } else {
-        if (film_category == 0) {
+        if (filmCategory == 0) {
           selectedCategory = "";
         } else {
-          selectedCategory = " AND category_id = ?";
+          selectedCategory = " AND category.name = ?";
         }
 
         console.log("Connected!");
         var sql =
-          "SELECT film.title, film.release_year, film.rental_rate, film.film_id FROM category LEFT JOIN film_category ON category.category_id = film_category.category_id LEFT JOIN film ON film_category.film_id = film.film_id LEFT JOIN film_actor ON film.film_id = film_actor.film_id LEFT JOIN actor ON film_actor.actor_id = actor.actor_id WHERE UPPER(film.title) LIKE UPPER(TRUMAN)";
+          "SELECT film.title, film.release_year, film.rental_rate, film.rating, film.film_id FROM category LEFT JOIN film_category ON category.category_id = film_category.category_id LEFT JOIN film ON film_category.film_id = film.film_id WHERE UPPER(film.title) LIKE UPPER(?)";
           sql+=selectedCategory+" AND film.rental_rate <= 9 ORDER BY UPPER(film.title)"
           console.log(sql.length)
-        conn.query(sql, [title, film_category, maxRentalPrice], function (err, result) {
+        conn.query(sql, [title, filmCategory, maxRentalPrice], function (err, result) {
           conn.end();
           if (err) {
             console.log(err);
