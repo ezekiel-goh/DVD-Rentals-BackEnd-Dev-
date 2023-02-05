@@ -1,3 +1,6 @@
+//Ezekiel Goh
+//P2205881
+//DIT/FT/1B/08
 var mysql = require("mysql");
 
 var dbconnect = {

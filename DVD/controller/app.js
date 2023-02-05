@@ -1,9 +1,14 @@
+//Ezekiel Goh
+//P2205881
+//DIT/FT/1B/08
+
 const express = require("express");
 const app = express();
 
 // import models
 const Film = require("../model/Film");
 const Actors = require("../model/Actors");
+const Staff = require("../model/Staff");
 
 //import the body-parser middleware
 const bodyParser = require("body-parser");

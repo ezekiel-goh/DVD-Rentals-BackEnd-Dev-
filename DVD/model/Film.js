@@ -1,3 +1,7 @@
+//Ezekiel Goh
+//P2205881
+//DIT/FT/1B/08
+
 var db = require("./databaseConfig.js");
 
 var Film = {
