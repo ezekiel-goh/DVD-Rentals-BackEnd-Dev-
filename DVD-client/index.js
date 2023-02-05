@@ -9,8 +9,8 @@ app.get("/searchResults", (req, res) => {
   res.sendFile("/public/searchResults.html", { root: __dirname });
 });
 
-app.get("/movies", (req, res) => {
-  res.sendFile("/public/movies.html", { root: __dirname });
+app.get("/:title/", (req, res) => {
+  res.sendFile("/public/FilmDetails.html", { root: __dirname });
 });
 
 app.get("/login/", (req, res) => {

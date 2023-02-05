@@ -38,13 +38,58 @@ const isLoggedInMiddleware = require("../isLoggedInMiddleware");
 //   });
 // });
 
+
+
 // -- Search By
+
+app.get("/searchResults/categories/", function (req, res) {
+  var name = req.query.name;
+  var category_id = req.query.category_id;
+
+  Film.getCategories(name, category_id, (err, result) => {
+    //-- you either get err or result
+    if (!err) {
+      console.log(result[0]);
+      if (result[0] === undefined) {
+        //-- When id = undefined
+        res.status(200).send([]);
+      } else {
+        res.status(200).send(result);
+      }
+    } else {
+      res.status(500).send({ error_msg: "Internal server error" });
+    }
+  });
+});
+
 app.get("/searchResults/", function (req, res) {
   var title = req.query.title;
   var category = req.query.category;
   var rental_rate = parseFloat(req.query.rental_rate);
 
   Film.getSearchedTitles(title, category, rental_rate, (err, result) => {
+    //-- you either get err or result
+    if (!err) {
+      console.log(result[0]);
+      if (result[0] === undefined) {
+        //-- When id = undefined
+        res.status(200).send([]);
+      } else {
+        res.status(200).send(result);
+      }
+    } else {
+      res.status(500).send({ error_msg: "Internal server error" });
+    }
+  });
+});
+
+// -- Film Details
+app.get("/searchResults/:title/", function (req, res) {
+  var title = req.query.title;
+  var category = req.query.category;
+  var rental_rate = parseFloat(req.query.rental_rate);
+
+  Film.FilmDetails(title, category, rental_rate, (err, result) => {
     //-- you either get err or result
     if (!err) {
       console.log(result[0]);
