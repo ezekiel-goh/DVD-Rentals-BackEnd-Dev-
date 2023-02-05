@@ -9,13 +9,17 @@ app.get("/searchResults", (req, res) => {
   res.sendFile("/public/searchResults.html", { root: __dirname });
 });
 
-app.get("/:title/", (req, res) => {
+app.get("/filmDetails", (req, res) => {
   res.sendFile("/public/FilmDetails.html", { root: __dirname });
 });
 
 app.get("/login/", (req, res) => {
   res.sendFile("/public/login.html", { root: __dirname });
 });
+
+app.get("/addActor/", (req, res) => {
+    res.sendFile("/public/addActor.html", { root: __dirname });
+  });
 
 const PORT = 3001;
 app.listen(PORT, () => {

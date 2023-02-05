@@ -135,9 +135,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mt-2 me-auto mb-2 mb-lg-0" id="ComFont">
-                        <!-- <li><a href="/" class="nav-link px-2 text-white fs-5">&nbspHomepage</a></li> -->
-                        <!-- <li><a href="/movie_titles" class="nav-link px-3 text-secondary fs-5" id="movieBtn">Movies</a> -->
+                        <li><a href="/" class="nav-link px-2 text-white fs-5">&nbspHomepage</a></li>
+                        <li><a href="/searchResults" class="nav-link px-3 text-secondary fs-5" id="movieBtn">Movie
+                                Titles</a>
                         </li>
+                        <a id="AdminPrivilleges" class="nav-link px-3 text-warning fs-5"></a>
                     </ul>
 
 
@@ -221,64 +223,74 @@
         const token = localStorage.getItem("token");
         const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
 
-        axios.get(`${baseUrl}/searchResults/categories/`)
-            .then((response) => {
-                console.log(response.data)
-                const categories = response.data;
-                // append categories
-                categories.forEach((category) => {
-                    const categories = `                
+        if (token === null || isNaN(loggedInUserID)) {
+            axios.get(`${baseUrl}/searchResults/categories/`)
+                .then((response) => {
+                    console.log(response.data)
+                    const categories = response.data;
+                    // append categories
+                    categories.forEach((category) => {
+                        const categories = `                
                     <option id="${category.category_id}">${category.name}</option>
                         `;
 
-                    $("#filmCategory").append(categories);
+                        $("#filmCategory").append(categories);
+                    })
                 })
-            })
 
 
-        $("#SearchEverything").submit((submit) => {
-            // prevents page refresh
-            submit.preventDefault();
-            const title = $("#title").val();
-            const filmCategory = $("#filmCategory").val();
-            const maxRentalPrice = $("#maxRentalPrice").val();
-            localStorage.setItem("title", title);
-            localStorage.setItem("filmCategory", filmCategory);
-            localStorage.setItem("maxRentalPrice", maxRentalPrice);
+            $("#SearchEverything").submit((submit) => {
+                // prevents page refresh
+                submit.preventDefault();
+                const title = $("#title").val();
+                const filmCategory = $("#filmCategory").val();
+                const maxRentalPrice = $("#maxRentalPrice").val();
+                localStorage.setItem("title", title);
+                localStorage.setItem("filmCategory", filmCategory);
+                localStorage.setItem("maxRentalPrice", maxRentalPrice);
 
-            // localStorage.setItem(response.data)
+                // localStorage.setItem(response.data)
 
-            const requestBody = {
-                title: title,
-                filmCategory: filmCategory,
-                maxRentalPrice: maxRentalPrice
-            };
-            console.log(title)
-            console.log(filmCategory)
-            console.log(maxRentalPrice)
+                const requestBody = {
+                    title: title,
+                    filmCategory: filmCategory,
+                    maxRentalPrice: maxRentalPrice
+                };
+                console.log(title)
+                console.log(filmCategory)
+                console.log(maxRentalPrice)
 
 
 
-            axios.get(`${baseUrl}/searchResults/`, { params: { title: title, filmCategory: filmCategory, maxRentalPrice: maxRentalPrice } }, requestBody)
-                .then((response) => {
-                    console.log(response.data)
-                    // localStorage.setItem("titleOutput", titleOutput);
-                    if (response.data.length == 0) {
-                        document.getElementById("films").innerHTML = ""
-                        const titleNotFound = `
+                axios.get(`${baseUrl}/searchResults/`, { params: { title: title, filmCategory: filmCategory, maxRentalPrice: maxRentalPrice } }, requestBody)
+                    .then((response) => {
+                        console.log(response.data)
+                        // localStorage.setItem("titleOutput", titleOutput);
+                        if (response.data.length == 0) {
+                            document.getElementById("films").innerHTML = ""
+                            const titleNotFound = `
                         <p>Aw Snap! Movie title not found :(</p>
                         `;
 
-                        $("#ErrorMsg").append(titleNotFound);
-                    } else
-                        window.location.href = "/searchResults/";
-                    // console.log("hello")
-                })
-                .catch((error) => {
-                    console.log(error);
+                            $("#ErrorMsg").append(titleNotFound);
+                        } else
+                            window.location.href = "/searchResults/";
+                        // console.log("hello")
+                    })
+                    .catch((error) => {
+                        console.log(error);
 
-                });
-        })
+                    });
+            })
+        } else {
+            const AdminPrivilleges = `
+            Add Actor
+                        `;
+
+            $("#AdminPrivilleges").append(AdminPrivilleges);
+        }
+
+
 
 
 

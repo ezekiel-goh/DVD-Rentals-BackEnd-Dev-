@@ -93,8 +93,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mt-1 me-auto mb-2 mb-lg-0" id="ComFont">
                         <li><a href="/" class="nav-link px-2 text-secondary fs-5">&nbspHomepage</a></li>
-                        <li><a href="/movie_titles" class="nav-link px-3 text-secondary fs-5" id="movieBtn">Movies</a>
+                        <li><a href="/searchResults" class="nav-link px-3 text-secondary fs-5" id="movieBtn">Movie Titles</a>
                         </li>
+                        
                     </ul>
 
 
@@ -128,15 +129,15 @@
                                 </svg>
 
 
-                                <form action="">
+                                <form action="" id = "login-form">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control rounded-5 mb-3" id="floatingInput"
-                                            placeholder="name@example.com">
-                                        <label for="floatingInput">Email address</label>
+                                        <input type="email" class="form-control text-black rounded-5 mb-3"
+                                            id="email" placeholder="name@example.com">
+                                        <label for="floatingInput">Admin Email</label>
                                     </div>
                                     <div class="form-floating">
-                                        <input type="password" class="form-control rounded-5 mt-3" id="floatingPassword"
-                                            placeholder="Password">
+                                        <input type="password" class="form-control text-black rounded-5 mt-3"
+                                            id="password" placeholder="Password">
                                         <label for="floatingPassword">Password</label>
                                     </div>
                                     <div class="text-center mb-3 mt-4">
@@ -167,17 +168,17 @@
         // prevent page reload
         event.preventDefault();
 
-        const username = $("#username").val();
+        const email = $("#email").val();
         const password = $("#password").val();
         const requestBody = {
-            username: username,
+            email: email,
             password: password
         };
 
         axios.post(`${baseUrl}/login/`, requestBody)
             .then((response) => {
                 const token = response.data.token;
-                const loggedInUserID = response.data.user_id;
+                const loggedInUserID = response.data.staff_id;
                 localStorage.setItem("token", token);
                 localStorage.setItem("loggedInUserID", loggedInUserID);
                 window.location.href = "/";
