@@ -6,12 +6,12 @@
 **ezekielgoh@gmail.com**
 **Password123!**
 
-##Instructions to set up##
+## Instructions to set up ##
 1. Run split terminal and cd into DVD and DVD-client respectively
 2. type run npm start-dev in both integrated terminals
 3. Go to chrome and type localhost:3001
 
-##MySqlWorkbench## 
+## MySqlWorkbench ## 
 1. Open MySqlWorkbench
 2. Create a new schema, by selecting 'Files' > 'Open SQL Script'.
 3. Open sakila_bed.sql, and run.
